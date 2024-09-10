@@ -19,7 +19,5 @@ export interface Login{
 
 
 export interface IC{
-    size:number,
-    color:String,
-    onpress:()=>{}
+    
 }

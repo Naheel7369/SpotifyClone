@@ -5,6 +5,8 @@ import {StyleSheet} from 'react-native';
 import {enableScreens} from 'react-native-screens';
 import BootSplash from 'react-native-bootsplash';
 import Login from './Src/Screens/Auth/Login';
+import  Signup  from './Src/Screens/Auth/Signup';
+import LoginForm from './Src/Screens/Auth/LoginForm';
 
 enableScreens();
 
@@ -22,6 +24,20 @@ function App(): React.JSX.Element {
           component={Login}
           options={{headerShown: false}}
         />
+       <Stack.Screen
+       name='Signup Screen'
+       component={Signup}
+       options={{headerShown: false}}
+       
+       />
+
+<Stack.Screen
+       name='Login Form'
+       component={LoginForm}
+       options={{headerShown: false}}
+       
+       />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -6,9 +6,13 @@ import {image} from '../../../Assets/Images';
 import {styles} from './Style';
 
 const LoginScreen: FC<Login> = ({navigation}) => {
-  function LoginNavigationHandler() {
-    navigation.navigate('Login Screen');
+  function SignupNavigationHandler() {
+    navigation.navigate('Signup Screen');
   }
+  function LoginNavigationHandler() {
+    navigation.navigate('Login Form');
+  }
+  
 
   return (
     <View style={styles.contianer}>
@@ -19,7 +23,7 @@ const LoginScreen: FC<Login> = ({navigation}) => {
         <Text style={styles.text}>Millions of songs Free on Spotify.</Text>
       </View>
 
-      <CustomButton>Signup for free</CustomButton>
+      <CustomButton onPress={SignupNavigationHandler} >Signup for free</CustomButton>
 
       <CustomButton
         Buttonstyle={styles.Buttonstyle}
@@ -45,7 +49,8 @@ const LoginScreen: FC<Login> = ({navigation}) => {
       <CustomButton
         Buttonstyle={styles.Buttonstyle}
         Backstyle={{backgroundColor: 'black'}}
-        onPress={LoginNavigationHandler}>
+        onPress={LoginNavigationHandler}
+        >
         Login
       </CustomButton>
     </View>
