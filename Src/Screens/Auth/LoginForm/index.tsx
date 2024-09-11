@@ -52,7 +52,7 @@ const SignInScreen = () => {
           <Button
             title="Login"
             color="#1DB954" 
-            onPress={() => navigation.navigate("HomeScreen")} 
+            onPress={() => navigation.navigate("Home")} 
           />
         </View>
       </View>

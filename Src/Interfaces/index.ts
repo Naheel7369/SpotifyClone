@@ -21,3 +21,15 @@ export interface Login{
 export interface IC{
     
 }
+
+export interface Home{
+
+}
+
+export interface Isearch{
+
+}
+
+export interface ILibrary{
+
+}
