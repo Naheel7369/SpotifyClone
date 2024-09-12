@@ -66,8 +66,13 @@ function App(): React.JSX.Element {
        name='BottomTabNavigation'
        component={BottomTabNavigation}
        />
+       <Stack.Screen
+       name='playList'
+       component={BottomTabNavigation}
+       />
 
       </Stack.Navigator>
+      
       
     </NavigationContainer>
   );

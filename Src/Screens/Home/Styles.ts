@@ -1,6 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { Colors } from '../../Utils/Color';
-
+import { StyleSheet } from "react-native";
+import { Colors } from "../../Utils/Color";
 
 const styles = StyleSheet.create({
   container: {
@@ -26,17 +25,17 @@ const styles = StyleSheet.create({
   madeForYouSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 24,
+    marginBottom: 10, 
   },
   madeForYouTile: {
-    width: '48%',
+    width: 180,
     alignItems: 'center',
   },
   madeForYouImage: {
     width: '100%',
-    height: 120,
+    height: 150,
     borderRadius: 8,
-    marginBottom: 8,
+    marginBottom: 10,
   },
   artistName: {
     color: Colors.primary150,
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     color: Colors.primary150,
-    marginBottom: 10,
+    marginBottom:10, 
   },
   songItem: {
     marginRight: 16,
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
   },
   songImage: {
     width: 100,
-    height: 100,
+    height: 150,
     borderRadius: 8,
     marginBottom: 8,
   },
@@ -67,3 +66,4 @@ const styles = StyleSheet.create({
 });
 
 export default styles;
+

@@ -4,6 +4,7 @@ import Home from '../../Screens/Home';
 import Search from '../../Screens/Search';
 import Library from '../../Screens/Library';
 import { Colors } from '../../Utils/Color';
+import PlayList from '../../Screens/Playlist';
 Colors
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +28,7 @@ function BottomTabNavigation() {
         headerShown: false,
       }}>
       <Tab.Screen
-        name="Home"
+        name="Home Screen"
         component={Home}
         options={{headerShown: false,
           tabBarIcon: ({color, size}) => {
@@ -39,7 +40,7 @@ function BottomTabNavigation() {
         }}
       />
       <Tab.Screen
-        name="Search"
+        name="Search Screen"
         component={Search}
         options={{headerShown: false,
           tabBarIcon: ({color, size}) => {
@@ -51,15 +52,15 @@ function BottomTabNavigation() {
         }}
       />
        <Tab.Screen
-        name="Library"
-        component={Library}
+        name="PlayList Screen"
+        component={PlayList}
         options={{headerShown: false,
           tabBarIcon: ({color, size}) => {
             return(
               <Ionicons name="library-outline" color={color} size={size}/>
             )
           },
-          tabBarLabel: 'Your Library',
+          tabBarLabel: 'PlayList',
         }}
       /> 
        

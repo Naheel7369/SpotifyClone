@@ -1,6 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#fff',
     marginBottom: 12,
@@ -40,8 +39,9 @@ const styles = StyleSheet.create({
   },
   genresContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap', // Allow wrapping
     justifyContent: 'space-between',
-    marginBottom: 1,
+    marginBottom: 16,
   },
   genreTile: {
     width: 170, // Fixed width
@@ -49,27 +49,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
+    marginBottom: 16, // Add margin to separate tiles
   },
   genreTileText: {
     color: '#fff',
-    fontSize: 16,
-    fontWeight: '500',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   topTileWrapper: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
     marginBottom: 16,
   },
   topTile: {
-    width:170 , // Fixed width
-    height: 100, // Fixed height
+    width: 170, 
+    height: 100, 
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 16,
+    marginBottom: 16, // Add margin to separate tiles
   },
   topTileText: {
     color: '#fff',
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 20, 
+    fontWeight: 'bold', 
+  },
+  contentContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
   },
 });
 

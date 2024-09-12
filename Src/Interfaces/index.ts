@@ -33,3 +33,23 @@ export interface Isearch{
 export interface ILibrary{
 
 }
+
+export interface ISC{
+  container?:object
+   children?:string
+    customstyle?:object
+}
+
+export interface Card{
+  text?:string;
+  color?:string;
+}
+
+
+ export interface Genre {
+  id: string;
+  ids?: string;
+  names?: string;
+  colors?: string;
+
+}
