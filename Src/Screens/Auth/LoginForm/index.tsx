@@ -1,13 +1,19 @@
-import React, { useState } from "react";
-import { Text, TextInput, View, Image, Pressable, Button } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { image } from "../../../Assets/Images"; // Assuming the Spotify logo is imported here
-import { styles } from "./Style";
+import React, {useState} from 'react';
+import {Text, TextInput, View, Image, Pressable, Button} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {image} from '../../../Assets/Images'; // Assuming the Spotify logo is imported here
+import {styles} from './Style';
+import getToken from '../../../Api';
 
 const SignInScreen = () => {
   const navigation = useNavigation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const ApiCheck = async () => {
+    const response = await getToken();
+    console.log(response, 'hello ');
+  };
 
   return (
     <View style={styles.container}>
@@ -15,7 +21,9 @@ const SignInScreen = () => {
       <Image style={styles.logo} source={image.Spotify} resizeMode="contain" />
 
       {/* Text Instruction */}
-      <Text style={styles.instructionText}>Please enter your login details</Text>
+      <Text style={styles.instructionText}>
+        Please enter your login details
+      </Text>
 
       {/* Email Input */}
       <TextInput
@@ -43,16 +51,18 @@ const SignInScreen = () => {
         <View style={styles.button}>
           <Button
             title="Cancel"
-            color="#1DB954" 
-            onPress={() => navigation.goBack()} 
+            color="#1DB954"
+            onPress={() => navigation.goBack()}
           />
         </View>
 
         <View style={styles.button}>
+          <Button title="Login" color="#1DB954" onPress={() => navigation.navigate('Home')} />
+
           <Button
-            title="Login"
-            color="#1DB954" 
-            onPress={() => navigation.navigate("Home")} 
+            title="TEMP"
+            color="#1DB954"
+            onPress={ApiCheck}
           />
         </View>
       </View>
@@ -60,7 +70,7 @@ const SignInScreen = () => {
       {/* SignUp Option */}
       <View style={styles.signUpContainer}>
         <Text style={styles.signUpText}>Don't have an account?</Text>
-        <Pressable onPress={() => navigation.navigate("Signup Screen")}>
+        <Pressable onPress={() => navigation.navigate('Signup Screen')}>
           <Text style={styles.signUpButton}>SignUp</Text>
         </Pressable>
       </View>
