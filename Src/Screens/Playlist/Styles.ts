@@ -7,20 +7,21 @@ export const styles = StyleSheet.create({
       padding: 20,
     },
     artistImage: {
-      width: '100%',
+      width: '80%',
       height: 250,
       resizeMode: 'cover',
+      marginHorizontal:'10%',
+      marginTop:'5%'
     },
     title: {
       color: 'white',
-      fontSize: 18,
+      fontSize: 19,
       marginTop: 10, // Adjusted top margin for space after logo
-      marginLeft: 50, // Ensure the text is aligned after the logo
-      textAlign: 'left', // Align the text to the left
+      // marginLeft: 50, // Ensure the text is aligned after the logo
+      textAlign: 'center', // Align the text to the left
     },
     spotifyLogo: {
-        marginHorizontal: 16,
-      marginRight: 10, // Space between logo and text
+      marginBottom: 10,
       marginTop: 20,
     //   alignSelf: 'flex-start', // Align logo to the left
     },
@@ -79,6 +80,33 @@ export const styles = StyleSheet.create({
       backgroundColor: 'transparent',
       width: 30,
       height: 30,
+    },
+    lyricsText: {
+      backgroundColor: '#c5c4c4',
+      color: 'black',
+      paddingHorizontal: 3,
+      fontSize: 10,
+      textAlignVertical: 'center',
+      fontWeight: 'bold',
+      marginRight: 4,
+      borderRadius: 2,
+      height: 15,
+      marginTop: 4,
+    },
+    artistContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    card: {
+      // backgroundColor: '#1c1c1c', // Slightly lighter than the background for contrast
+      borderRadius: 8,
+      marginBottom: 15, // Space between cards
+      padding: 15, // Padding inside the card
+      // shadowColor: '#000', // Shadow for depth
+      // shadowOffset: { width: 0, height: 2 }, // Offset of the shadow
+      // shadowOpacity: 0.8, // Shadow opacity
+      // shadowRadius: 4, // How blurred the shadow is
+      elevation: 5, 
     },
   });
   

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, Image, Pressable } from 'react-native';
+import { View, Text, FlatList, Image, Pressable, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './Styles';
@@ -28,21 +28,22 @@ const HomeScreen = () => {
   ];
 
   const renderMadeForYouItem = ({ item }:any) => (
-    <Pressable onPress={()=>navigation.navigate('PlayList Screen')}>
+    <TouchableOpacity onPress={()=>navigation.navigate('PlayList')}>
     <View style={styles.madeForYouTile}>
       <Image source={item.image} style={styles.madeForYouImage} />
       <Text style={styles.artistName}>{item.name}</Text>
     </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 
   const renderSongItem = ({ item }:any) => (
-
+    <TouchableOpacity>
     <View style={styles.songItem}>
       <Image source={item.image} style={styles.songImage} />
       <Text style={styles.songName}>{item.name}</Text>
       <Text style={styles.artistName}>{item.artist}</Text>
     </View>
+    </TouchableOpacity>
  
   );
 
@@ -52,15 +53,15 @@ const HomeScreen = () => {
       <View style={styles.header}>
         <Text style={styles.headerText}>Made for you</Text>
         <View style={styles.headerIcons}>
-          <Pressable>
+          <TouchableOpacity>
             <Icon name="notifications-outline" size={30} color={Colors.primary150} />
-          </Pressable>
-          <Pressable>
+          </TouchableOpacity>
+          <TouchableOpacity>
             <Icon name="time-outline" size={30} color={Colors.primary150} />
-          </Pressable>
-          <Pressable>
+          </TouchableOpacity>
+          <TouchableOpacity>
             <Icon name="settings-outline" size={30} color={Colors.primary150} />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
 

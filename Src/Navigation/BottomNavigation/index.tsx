@@ -5,6 +5,7 @@ import Search from '../../Screens/Search';
 import Library from '../../Screens/Library';
 import { Colors } from '../../Utils/Color';
 import PlayList from '../../Screens/Playlist';
+import HomePlaylistScreenStack from '../Homeplaylist';
 Colors
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +30,7 @@ function BottomTabNavigation() {
       }}>
       <Tab.Screen
         name="Home Screen"
-        component={Home}
+        component={HomePlaylistScreenStack}
         options={{headerShown: false,
           tabBarIcon: ({color, size}) => {
             return(
@@ -51,7 +52,7 @@ function BottomTabNavigation() {
           tabBarLabel: 'Search',
         }}
       />
-       <Tab.Screen
+       {/* <Tab.Screen
         name="PlayList Screen"
         component={PlayList}
         options={{headerShown: false,
@@ -62,7 +63,7 @@ function BottomTabNavigation() {
           },
           tabBarLabel: 'PlayList',
         }}
-      /> 
+      />  */}
        
         
         
