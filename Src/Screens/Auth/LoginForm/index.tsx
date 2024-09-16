@@ -9,6 +9,8 @@ const SignInScreen = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  
+      
 
   const ApiCheck = async () => {
     const response = await getToken();
@@ -59,11 +61,7 @@ const SignInScreen = () => {
         <View style={styles.button}>
           <Button title="Login" color="#1DB954" onPress={() => navigation.navigate('Home')} />
 
-          <Button
-            title="TEMP"
-            color="#1DB954"
-            onPress={ApiCheck}
-          />
+          
         </View>
       </View>
 
