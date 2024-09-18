@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   madeForYouImage: {
-    width: '100%',
+    width: '90%',
     height: 150,
     borderRadius: 8,
     marginBottom: 10,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   artistName: {
     color: Colors.primary150,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: '500',
   },
   sectionTitle: {
     fontSize: 22,
@@ -62,6 +62,25 @@ const styles = StyleSheet.create({
     color: Colors.primary150,
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  eleaseItem: {
+    padding: 15,
+    marginVertical: 5,
+    marginHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: '#2E2E2E',
+    borderColor: '#444',
+    borderWidth: 1,
+  },
+  releaseName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
+  releaseDate: {
+    fontSize: 14,
+    color: '#B0B0B0',
+    marginTop: 5,
   },
 });
 

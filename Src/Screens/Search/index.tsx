@@ -39,24 +39,25 @@ const SearchScreen = () => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const data = await Categories(); 
-        const fetchedCategories = data?.categories?.items?.map(
-          (category: any) => ({
-            id: `category-${category.id}`, // Ensure unique ID
-            name: category.name,
-          }),
-        );
-        setCategories(fetchedCategories || []); // Set categories state
-      } catch (err) {
-        setError('Failed to fetch categories. Check console for more details.');
-        console.error(err);
-      } finally {
-        setLoading(false); // Stop loading after fetch is done
-      }
-    };
+  setLoading(true);
+  setError(null);
+  try {
+    const data = await Categories(); 
+    console.log(data); // Log the entire data object to check the structure
+    const fetchedCategories = data?.items?.map((category: any, index: number) => ({
+      id: `category-${index}`, 
+      name: category.name, // Assuming each category object has a "name" property
+    }));
+
+    setCategories(fetchedCategories || []); // Set categories state
+  } catch (err) {
+    setError('Failed to fetch categories. Check console for more details.');
+    console.error(err);
+  } finally {
+    setLoading(false); 
+  }
+};
+
 
     const fetchGenres = async () => {
       setLoading(true);
