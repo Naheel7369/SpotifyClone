@@ -33,28 +33,30 @@ const styles = StyleSheet.create({
   },
   madeForYouImage: {
     width: '90%',
-    height: 150,
+    height: 140,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   artistName: {
     color: Colors.primary150,
     fontSize: 14,
     fontWeight: '500',
+    width:100,
+  
   },
   sectionTitle: {
     fontSize: 22,
     fontWeight: 'bold',
     color: Colors.primary150,
-    marginBottom:10, 
+    marginBottom:4, 
   },
   songItem: {
     marginRight: 16,
     alignItems: 'center',
   },
   songImage: {
-    width: 100,
-    height: 150,
+    width: 120,
+    height: 140,
     borderRadius: 8,
     marginBottom: 8,
   },
@@ -62,25 +64,31 @@ const styles = StyleSheet.create({
     color: Colors.primary150,
     fontSize: 14,
     fontWeight: 'bold',
+    width:100,
   },
-  eleaseItem: {
-    padding: 15,
-    marginVertical: 5,
-    marginHorizontal: 10,
-    borderRadius: 10,
-    backgroundColor: '#2E2E2E',
-    borderColor: '#444',
-    borderWidth: 1,
-  },
-  releaseName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#FFF',
-  },
-  releaseDate: {
-    fontSize: 14,
-    color: '#B0B0B0',
-    marginTop: 5,
+  // eleaseItem: {
+  //   padding: 15,
+  //   // marginVertical: 5,
+  //   marginHorizontal: 10,
+  //   borderRadius: 10,
+  //   backgroundColor: '#2E2E2E',
+  //   borderColor: '#444',
+  //   borderWidth: 1,
+  // },
+  // releaseName: {
+  //   fontSize: 16,
+  //   fontWeight: 'bold',
+  //   color: '#FFF',
+  // },
+  // releaseDate: {
+  //   fontSize: 14,
+  //   color: '#B0B0B0',
+  //   marginTop: 5,
+  // },
+  MFY:{
+ fontSize:16,
+ fontWeight:"bold",
+ color: '#FFF',
   },
 });
 

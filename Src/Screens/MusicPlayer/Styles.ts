@@ -20,17 +20,18 @@ export const styles = StyleSheet.create({
       color: 'white',
       fontSize: 20,
       textTransform: 'uppercase',
-      marginHorizontal:'20%'
+      marginHorizontal:'20%',
+      margin:3
     },
     sub: {
       color: '#fff',
       fontSize: 16,
       marginTop: 4,
       marginBottom: 10,
-       marginHorizontal:'33%',
+      alignSelf:'center',
     },
     artistImage: {
-      width: 300,
+      width: 400,
       height: 300,
       borderRadius: 20,
       alignSelf: 'center',
@@ -76,6 +77,12 @@ export const styles = StyleSheet.create({
       width: 40,
       height: 40,
       tintColor: '#fff',
+    },
+    art:{
+  alignSelf:"center",
+  fontWeight:'bold',
+  fontSize:25,  
+  color:'white',
     },
   });
   

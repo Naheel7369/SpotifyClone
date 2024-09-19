@@ -108,7 +108,7 @@ const HomeScreen = () => {
 >
   <View style={styles.madeForYouTile}>
     <Image source={image.LP} style={styles.madeForYouImage} />
-    <Text style={styles.artistName}>{item.name}</Text>
+    <Text style={styles.MFY}numberOfLines={1}ellipsizeMode='tail' >{item.name}</Text>
   </View>
 </TouchableOpacity>
 
@@ -122,8 +122,8 @@ console.log(albums,'hiiiiiii');
     <TouchableOpacity>
       <View style={styles.songItem}>
         <Image source={image.Numb} style={styles.songImage} />
-        <Text style={styles.songName}>{item.name}</Text>
-        <Text style={styles.artistName}>{item.artist}</Text>
+        <Text style={styles.songName}numberOfLines={1} ellipsizeMode='tail'>{item.name}</Text>
+        <Text style={styles.artistName} numberOfLines={1} ellipsizeMode='tail'>{item.artist}</Text>
       </View>
     </TouchableOpacity>
   );

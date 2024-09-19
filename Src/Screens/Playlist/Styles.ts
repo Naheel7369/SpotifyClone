@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export const styles = StyleSheet.create({
     container: {
@@ -102,11 +103,13 @@ export const styles = StyleSheet.create({
       borderRadius: 8,
       marginBottom: 15, // Space between cards
       padding: 15, // Padding inside the card
-      // shadowColor: '#000', // Shadow for depth
-      // shadowOffset: { width: 0, height: 2 }, // Offset of the shadow
-      // shadowOpacity: 0.8, // Shadow opacity
-      // shadowRadius: 4, // How blurred the shadow is
+      
       elevation: 5, 
     },
-  });
+    TotalTracks:{
+    color: 'white',
+    fontWeight:'bold',
+    fontSize:14,
+  },
+});
   

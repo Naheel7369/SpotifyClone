@@ -161,12 +161,12 @@ export const Songs = async () => {
   }
 };
 
-export const Singers = async () => {
+export const Singers = async (albumId: string) => {
   try {
     let accessToken = await AsyncStorage.getItem('access_token');
 
     if (!accessToken) {
-      accessToken = await getToken(); // getToken already returns the token
+      accessToken = await getToken();
       if (!accessToken) {
         throw new Error('Failed to retrieve a valid access token');
       }
@@ -174,16 +174,44 @@ export const Singers = async () => {
     }
 
     const response = await axios.get(
-      'https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy',
+      `https://api.spotify.com/v1/albums/${albumId}/tracks`, 
       {
         headers: { Authorization: 'Bearer ' + accessToken },
       }
     );
 
-    console.log('=======>', response.data);
+    console.log('Album tracks response:', response.data);
     return response.data;
   } catch (error) {
-    console.log('Error fetching New Recommendated Tracks:', error);
+    console.log('Error fetching album tracks:', error);
+    throw error;
+  }
+};
+
+
+export const GettingSongs = async (id) => {
+  try {
+    let accessToken = await AsyncStorage.getItem('access_token');
+
+    if (!accessToken) {
+      accessToken = await getToken(); 
+      if (!accessToken) {
+        throw new Error('Failed to retrieve a valid access token');
+      }
+      await AsyncStorage.setItem('access_token', accessToken);
+    }
+
+    const response = await axios.get(
+      `https://api.spotify.com/v1/tracks/${id}`,
+      {
+        headers: { Authorization: 'Bearer ' + accessToken },
+      }
+    );
+
+    console.log('===>', response.data);
+    return response.data;
+  } catch (error) {
+    console.log('Error fetching New Tracks:', error);
     throw error;
   }
 };
