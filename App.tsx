@@ -11,6 +11,8 @@ import Home from './Src/Screens/Home';
 import Search from './Src/Screens/Search';
 import Library from './Src/Screens/Library';
 import BottomTabNavigation from './Src/Navigation/BottomNavigation';
+import { store } from './Reducers/store';
+import { Provider } from 'react-redux';
 
 
 enableScreens();
@@ -19,6 +21,7 @@ function App(): React.JSX.Element {
   const Stack = createNativeStackNavigator();
 
   return (
+    <Provider store={store}>
     <NavigationContainer
       onReady={() => {
         BootSplash.hide();
@@ -69,9 +72,8 @@ function App(): React.JSX.Element {
        
 
       </Stack.Navigator>
-      
-      
     </NavigationContainer>
+    </Provider>
   );
 }
 

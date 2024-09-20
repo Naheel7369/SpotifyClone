@@ -108,7 +108,7 @@ export const styles = StyleSheet.create({
     },
     TotalTracks:{
     color: 'white',
-    fontWeight:'bold',
+    // fontWeight:'bold',
     fontSize:14,
   },
 });

@@ -18,7 +18,7 @@ function BottomTabNavigation() {
         tabBarActiveBackgroundColor: Colors.tab2,
         tabBarLabelStyle: {fontSize: 14},
         tabBarStyle: {
-          backgroundColor: Colors.primary100,
+          backgroundColor: 'transparent',
           position: 'absolute',
           borderTopWidth: 0,
           left: 0,

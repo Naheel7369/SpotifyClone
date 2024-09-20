@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: 10,
-      marginBottom: 50,
+      marginBottom: 20,
     },
     controlIcon: {
       width: 24,

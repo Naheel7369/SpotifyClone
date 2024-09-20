@@ -1,21 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
-import { styles } from './Styles';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
+import {styles} from './Styles';
 import Slider from '@react-native-community/slider';
-import { image } from '../../Assets/Images';
+import {image} from '../../Assets/Images';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { GettingSongs } from '../../Api';
+import {GettingSongs} from '../../Api';
 import Sound from 'react-native-sound';
+import Share from 'react-native-share';
 
-const MusicPlayer = ({ navigation, route }: any) => {
-  const { trackId } = route.params;
+const MusicPlayer = ({navigation, route}: any) => {
+  const {trackId, playlist = []} = route.params;
   const [isPlaying, setIsPlaying] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [track, setTrack] = useState<any>(null); 
-  const [position, setPosition] = useState<number>(0); 
-  const [duration, setDuration] = useState<number>(0); 
-  const [sound, setSound] = useState<Sound | null>(null); 
+  const [track, setTrack] = useState<any>(null);
+  const [position, setPosition] = useState<number>(0);
+  const [duration, setDuration] = useState<number>(0);
+  const [sound, setSound] = useState<Sound | null>(null);
+  const [currentIndex, setcurrentIndex] = useState<number>(0);
+  
+
+
+  const handle = (track: any) => {
+    if (!track || !track.preview_url) return; // Guard clause
+    const options = {
+      title: 'Share Track',
+      message: `Check out this track: ${track.title}`,
+      url: track.preview_url,
+    };
+
+    Share.open(options)
+      .then((res: any) => {
+        console.log('Shared successfully:', res);
+      })
+      .catch((err: any) => {
+        console.error('Share error:', err);
+      });
+  };
 
   // Format time from seconds to minutes:seconds
   const formatTime = (seconds: number) => {
@@ -29,7 +56,7 @@ const MusicPlayer = ({ navigation, route }: any) => {
       if (isPlaying) {
         sound.pause();
       } else {
-        sound.play((success) => {
+        sound.play(success => {
           if (!success) {
             console.log('Playback failed due to audio decoding errors');
           }
@@ -39,11 +66,32 @@ const MusicPlayer = ({ navigation, route }: any) => {
     }
   };
 
-  // Update position of the song while playing
+  const handleNextTrack = () => {
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < playlist.length) {
+      setcurrentIndex(nextIndex);
+      fetchGettingSongs(playlist[nextIndex].id);
+      setIsPlaying(false);
+    } else {
+      console.log('Reached end of playlist');
+    }
+  };
+
+  const handlePrevTrack = () => {
+    const prevIndex = currentIndex - 1;
+    if (prevIndex >= 0) {
+      setcurrentIndex(prevIndex);
+      fetchGettingSongs(playlist[prevIndex].id);
+      setIsPlaying(false);
+    } else {
+      console.log('Reached beginning of playlist');
+    }
+  };
+
   useEffect(() => {
     if (sound && isPlaying) {
       const interval = setInterval(() => {
-        sound.getCurrentTime((seconds) => {
+        sound.getCurrentTime(seconds => {
           setPosition(seconds);
         });
       }, 1000);
@@ -66,19 +114,20 @@ const MusicPlayer = ({ navigation, route }: any) => {
       ),
       headerTitle: 'MusicPlayer',
     });
-  }, [navigation]);
+  }, [navigation, track]);
 
-  useEffect(() => {
-    const fetchGettingSongs = async () => {
-      try {
-        const response = await GettingSongs(trackId);
+  const fetchGettingSongs = async songId => {
+    try {
+      const response = await GettingSongs(songId);
+      if (response) {
         setTrack({
           id: response.id,
           title: response.name,
           artist: response.artists.map((artist: any) => artist.name).join(', '),
+          preview_url: response.preview_url,
         });
 
-        const music = new Sound(response.preview_url, null, (error) => {
+        const music = new Sound(response.preview_url, null, error => {
           if (error) {
             console.log('Failed to load the sound', error);
             return;
@@ -86,15 +135,19 @@ const MusicPlayer = ({ navigation, route }: any) => {
           setDuration(music.getDuration());
           setSound(music);
         });
-      } catch (err) {
-        setError('Failed to fetch the song. Check console for more details.');
-        console.error(err);
-      } finally {
-        setLoading(false);
+      } else {
+        setError('Track not found.');
       }
-    };
+    } catch (err) {
+      setError('Failed to fetch the song. Check console for more details.');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchGettingSongs();
+  useEffect(() => {
+    fetchGettingSongs(trackId);
 
     // Cleanup the sound on component unmount
     return () => {
@@ -117,7 +170,7 @@ const MusicPlayer = ({ navigation, route }: any) => {
       <Text style={styles.Textstyle}>PLAYING FROM SEARCH</Text>
 
       {track?.albumImage ? (
-        <Image source={image.LP} style={styles.artistImage} />
+        <Image source={{uri: track.albumImage}} style={styles.artistImage} />
       ) : (
         <Image source={image.LP} style={styles.artistImage} />
       )}
@@ -126,22 +179,27 @@ const MusicPlayer = ({ navigation, route }: any) => {
       <Text style={styles.sub}>By: {track.artist}</Text>
 
       {/* Timer above the slider */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%' }}>
-        <Text style={{ color: 'white' }}>{formatTime(position)}</Text>
-        <Text style={{ color: 'white' }}>{formatTime(duration)}</Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          width: '90%',
+        }}>
+        <Text style={{color: 'white'}}>{formatTime(position)}</Text>
+        <Text style={{color: 'white'}}>{formatTime(duration)}</Text>
       </View>
 
       {/* Slider */}
-      <View style={{ alignItems: 'center' }}>
+      <View style={{alignItems: 'center'}}>
         <Slider
-          style={{ width: 400, height: 44, marginBottom: '11%' }}
+          style={{width: 400, height: 44, marginBottom: '11%'}}
           minimumValue={0}
           maximumValue={duration}
           thumbTintColor="white"
           minimumTrackTintColor="#FFF"
           maximumTrackTintColor="#000000"
           value={position}
-          onSlidingComplete={(value) => sound?.setCurrentTime(value)} // Seek when the user interacts with the slider
+          onSlidingComplete={value => sound?.setCurrentTime(value)} // Seek when the user interacts with the slider
         />
       </View>
 
@@ -150,7 +208,7 @@ const MusicPlayer = ({ navigation, route }: any) => {
         <TouchableOpacity>
           <Image source={image.shu} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handlePrevTrack}>
           <Image source={image.Prev} />
         </TouchableOpacity>
         <TouchableOpacity onPress={PlayHandler}>
@@ -160,7 +218,7 @@ const MusicPlayer = ({ navigation, route }: any) => {
             name={isPlaying ? 'pause-circle' : 'play-circle'}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleNextTrack}>
           <Image source={image.Next} />
         </TouchableOpacity>
         <TouchableOpacity>
@@ -180,7 +238,7 @@ const MusicPlayer = ({ navigation, route }: any) => {
           <Image source={image.cast} />
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => handle(track)}>
           <Image source={image.share} />
         </TouchableOpacity>
       </View>

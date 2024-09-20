@@ -5,6 +5,7 @@ import CustomButton from '../../../Components/Button';
 import {image} from '../../../Assets/Images';
 import {styles} from './Style';
 
+
 const LoginScreen: FC<Login> = ({navigation}) => {
   function SignupNavigationHandler() {
     navigation.navigate('Signup Screen');
@@ -58,3 +59,7 @@ const LoginScreen: FC<Login> = ({navigation}) => {
 };
 
 export default LoginScreen;
+function Api() {
+  throw new Error('Function not implemented.');
+}
+
