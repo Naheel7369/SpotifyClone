@@ -8,8 +8,10 @@ const initialState = {
     initialState,
     reducers: {
         loggedIn: (state, action: PayloadAction<{accesstoken:string }>) => {
+        console.log("payload",action.payload,action.payload.accesstoken);
         state.loggedIn=true;
-        state.accesstoken=action.payload.accesstoken;
+        state.accesstoken=action.payload;
+
       },
       LoggedOut: (state) => {
         state.loggedIn=false;
@@ -17,6 +19,5 @@ const initialState = {
       },
     },
   });
-  export const loggedIn = auth.actions.loggedIn;
-export const LoggedOut = auth.actions.LoggedOut;
+  export const { loggedIn, LoggedOut } = auth.actions;
 export default auth.reducer;

@@ -11,7 +11,9 @@ const LoginScreen: FC<Login> = ({navigation}) => {
     navigation.navigate('Signup Screen');
   }
   function LoginNavigationHandler() {
+    console.log("naheel")
     navigation.navigate('Login Form');
+    
   }
   
 

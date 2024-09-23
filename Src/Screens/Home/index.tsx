@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import styles from './Styles';
-import { Colors } from '../../Utils/Color';
-import { image } from '../../Assets/Images'; 
-import { useNavigation } from '@react-navigation/native';
-import { Releases, Songs, Tracks } from '../../Api';
+import {Colors} from '../../Utils/Color';
+import {image} from '../../Assets/Images';
+import {useNavigation} from '@react-navigation/native';
+import {Releases, Songs, Tracks} from '../../Api';
+import {useSelector, UseSelector} from 'react-redux';
+import {loggedIn} from '../../../Reducers/slice';
+import {store} from '../../../Reducers/store';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -15,8 +25,9 @@ const HomeScreen = () => {
   const [error, setError] = useState<string | null>(null);
   const [Track, setTrack] = useState<any[]>([]);
   const [Song, setSong] = useState<any[]>([]);
+  const auth = useSelector(state => state.auth);
+  console.log('=====>selector', auth);
 
-  
   useEffect(() => {
     const fetchReleases = async () => {
       try {
@@ -25,7 +36,7 @@ const HomeScreen = () => {
           id: album.id,
           name: album.name,
           releaseDate: album.release_date,
-          image: album.images[0]?.url,  
+          image: album.images[0]?.url,
         }));
         setAlbums(fetchedAlbums || []);
       } catch (err) {
@@ -41,11 +52,12 @@ const HomeScreen = () => {
         console.log('Tracks response:', response); // Check the response structure
 
         // Check if items exist and are in the correct structure
-        const fetchedTracks = response?.tracks?.map((track: any) => ({
-          id: track.id,
-          name: track.name,
-          artist: track.artists.map((artist: any) => artist.name).join(', '),
-        })) || [];
+        const fetchedTracks =
+          response?.tracks?.map((track: any) => ({
+            id: track.id,
+            name: track.name,
+            artist: track.artists.map((artist: any) => artist.name).join(', '),
+          })) || [];
         setTrack(fetchedTracks);
       } catch (err) {
         setError('Failed to fetch tracks. Check console for more details.');
@@ -57,15 +69,15 @@ const HomeScreen = () => {
 
     const fetchSongs = async () => {
       try {
-        const response = await Songs(); 
-        console.log('Tracks response:', response); 
-    
-      
-        const fetchedSongs = response?.tracks?.map((track: any) => ({
-          id: track.id,
-          name: track.name,
-          artist: track.artists.map((artist: any) => artist.name).join(', '),
-        })) || [];
+        const response = await Songs();
+        console.log('Tracks response:', response);
+
+        const fetchedSongs =
+          response?.tracks?.map((track: any) => ({
+            id: track.id,
+            name: track.name,
+            artist: track.artists.map((artist: any) => artist.name).join(', '),
+          })) || [];
         console.log('Fetched Songs:', JSON.stringify(fetchedSongs, null, 2));
         setSong(fetchedSongs);
       } catch (err) {
@@ -75,15 +87,13 @@ const HomeScreen = () => {
         setLoading(false);
       }
     };
-    
+
     fetchSongs();
-    
+
     fetchTracks();
 
     fetchReleases(); // Fetch albums when the component mounts
   }, []);
-
-  
 
   if (loading) {
     return <ActivityIndicator size="large" color="#0000ff" />;
@@ -93,37 +103,38 @@ const HomeScreen = () => {
     return <Text>{error}</Text>;
   }
 
-  const trendingData = Track
-  
+  const trendingData = Track;
 
-  const topPicksData = Song
-    
+  const topPicksData = Song;
 
-  const renderMadeForYouItem = ({ item }: any) => (
-<TouchableOpacity 
-  onPress={() => navigation.navigate('PlayList', {
-    albumId: item.id,         
-    albumName: item.name,  
-  })}
->
-  <View style={styles.madeForYouTile}>
-    <Image source={image.LP} style={styles.madeForYouImage} />
-    <Text style={styles.MFY}numberOfLines={1}ellipsizeMode='tail' >{item.name}</Text>
-  </View>
-</TouchableOpacity>
+  const renderMadeForYouItem = ({item}: any) => (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('PlayList', {
+          albumId: item.id,
+          albumName: item.name,
+        })
+      }>
+      <View style={styles.madeForYouTile}>
+        <Image source={image.LP} style={styles.madeForYouImage} />
+        <Text style={styles.MFY} numberOfLines={1} ellipsizeMode="tail">
+          {item.name}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+  console.log(albums, 'hiiiiiii');
 
-);
-console.log(albums,'hiiiiiii');
-
-
-
-
-  const renderSongItem = ({ item }: any) => (
+  const renderSongItem = ({item}: any) => (
     <TouchableOpacity>
       <View style={styles.songItem}>
         <Image source={image.Numb} style={styles.songImage} />
-        <Text style={styles.songName}numberOfLines={1} ellipsizeMode='tail'>{item.name}</Text>
-        <Text style={styles.artistName} numberOfLines={1} ellipsizeMode='tail'>{item.artist}</Text>
+        <Text style={styles.songName} numberOfLines={1} ellipsizeMode="tail">
+          {item.name}
+        </Text>
+        <Text style={styles.artistName} numberOfLines={1} ellipsizeMode="tail">
+          {item.artist}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -135,7 +146,11 @@ console.log(albums,'hiiiiiii');
         <Text style={styles.headerText}>Made for you</Text>
         <View style={styles.headerIcons}>
           <TouchableOpacity>
-            <Icon name="notifications-outline" size={30} color={Colors.primary150} />
+            <Icon
+              name="notifications-outline"
+              size={30}
+              color={Colors.primary150}
+            />
           </TouchableOpacity>
           <TouchableOpacity>
             <Icon name="time-outline" size={30} color={Colors.primary150} />
@@ -152,7 +167,7 @@ console.log(albums,'hiiiiiii');
           horizontal
           data={albums}
           renderItem={renderMadeForYouItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
         />
       </View>
@@ -163,7 +178,7 @@ console.log(albums,'hiiiiiii');
         horizontal
         data={trendingData}
         renderItem={renderSongItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         showsHorizontalScrollIndicator={false}
       />
 
@@ -173,7 +188,7 @@ console.log(albums,'hiiiiiii');
         horizontal
         data={topPicksData}
         renderItem={renderSongItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         showsHorizontalScrollIndicator={false}
       />
     </LinearGradient>
