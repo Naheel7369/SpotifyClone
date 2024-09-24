@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
-  FlatList,
   Image,
   Text,
   TouchableOpacity,
   View,
+  ScrollView,
 } from 'react-native';
 import { styles } from './Styles';
 import { image } from '../../Assets/Images';
 import { useNavigation } from '@react-navigation/native';
-import { Singers } from '../../Api'; 
+import { Singers } from '../../Api';
 import Share from 'react-native-share';
+import { interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 const PlaylistScreen = ({ route }) => {
   const { albumId, albumName } = route.params;
@@ -24,8 +25,8 @@ const PlaylistScreen = ({ route }) => {
   const handleImagePress = (track: any) => {
     const options = {
       title: 'Share Track',
-      message: `Check out this track: ${track.title}`, 
-      url: track.preview_url, 
+      message: `Check out this track: ${track.title}`,
+      url: track.preview_url,
     };
 
     Share.open(options)
@@ -40,18 +41,25 @@ const PlaylistScreen = ({ route }) => {
   useEffect(() => {
     const fetchTracks = async () => {
       try {
+        console.log('Fetching tracks for album:', albumId); 
         const response = await Singers(albumId);
-        const albumTracks = response?.items;
+        console.log(response, 'responsessssssssssssss');
         
+        console.log('API Response:', response); 
+
+        const albumTracks = response?.items;
+
         if (albumTracks && Array.isArray(albumTracks)) {
           const filteredTracks = albumTracks.filter((track: any) => track.preview_url);
+          console.log('Filtered Tracks:', filteredTracks); 
+
           const formattedTracks = filteredTracks.map((track: any) => ({
             id: track.id,
             title: track.name,
             artist: track.artists.map((artist: any) => artist.name).join(', '),
             length: track.length,
             Time: track.duration_ms,
-            preview_url: track.preview_url, 
+            preview_url: track.preview_url,
           }));
 
           setTracks(formattedTracks);
@@ -60,7 +68,7 @@ const PlaylistScreen = ({ route }) => {
         }
       } catch (err) {
         setError('Failed to fetch songs. Check console for more details.');
-        console.error(err);
+        console.error('API fetch error:', err);
       } finally {
         setLoading(false);
       }
@@ -87,36 +95,14 @@ const PlaylistScreen = ({ route }) => {
   if (error) {
     return <Text>{error}</Text>;
   }
-  console.log('He===>',tracks)
 
-  const renderItem = ({ item }: any) => (
-    <TouchableOpacity
-      onPress={() => navigation.navigate('MusicPlayer', {
-        trackId: item.id,
-        playlist: tracks,
-      })}
-      style={styles.card}>
-      <View style={styles.playlistItem}>
-        <Image source={image.BE} style={styles.playlistImage} />
-        <View style={styles.playlistInfo}>
-          <Text style={styles.playlistTitle}>{item.title}</Text>
-          <View style={styles.artistContainer}>
-            <Text style={styles.lyricsText}>LYRICS</Text>
-            <Text style={styles.playlistArtist}>{item.artist}</Text>
-          </View>
-        </View>
-        <TouchableOpacity onPress={() => handleImagePress(item)} style={styles.playlistButton}>
-          <Image
-            source={image.dot}
-            style={{ marginHorizontal: '3%', marginTop: '3%', marginRight: '1%' }}
-          />
-        </TouchableOpacity>
-      </View>
-    </TouchableOpacity>
-  );
+  console.log('Fetched Tracks:', tracks); 
+
+ 
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+    style={styles.container}>
       <Image source={image.LP} style={styles.artistImage} />
       <Text style={styles.title}>{albumName}</Text>
       <Image source={image.small} style={styles.spotifyLogo} />
@@ -125,14 +111,37 @@ const PlaylistScreen = ({ route }) => {
         <Text style={styles.subtitle}> Total Tracks: {tracks.length}</Text>
         <Text style={styles.subtitle}> Time: {formattedTime} </Text>
       </View>
-      
-      <FlatList
-        data={tracks}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        style={styles.playlist}
-      />
-    </View>
+
+      {tracks.map((item) => (
+        <TouchableOpacity
+          key={item.id}
+          onPress={() =>
+            navigation.navigate('MusicPlayer', {
+              trackId: item.id,
+              playlist: tracks,
+            })
+          }
+          style={styles.card}
+        >
+          <View style={styles.playlistItem}>
+            <Image source={image.BE} style={styles.playlistImage} />
+            <View style={styles.playlistInfo}>
+              <Text style={styles.playlistTitle}>{item.title}</Text>
+              <View style={styles.artistContainer}>
+                <Text style={styles.lyricsText}>LYRICS</Text>
+                <Text style={styles.playlistArtist}>{item.artist}</Text>
+              </View>
+            </View>
+            <TouchableOpacity onPress={() => handleImagePress(item)} style={styles.playlistButton}>
+              <Image
+                source={image.dot}
+                style={{ marginHorizontal: '3%', marginTop: '3%', marginRight: '1%' }}
+              />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      ))}
+    </ScrollView>
   );
 };
 

@@ -4,18 +4,16 @@ import {Login} from '../../../Interfaces';
 import CustomButton from '../../../Components/Button';
 import {image} from '../../../Assets/Images';
 import {styles} from './Style';
-
+import {btnArr} from '../../../Utils/Constant';
 
 const LoginScreen: FC<Login> = ({navigation}) => {
   function SignupNavigationHandler() {
     navigation.navigate('Signup Screen');
   }
   function LoginNavigationHandler() {
-    console.log("naheel")
+    console.log('naheel');
     navigation.navigate('Login Form');
-    
   }
-  
 
   return (
     <View style={styles.contianer}>
@@ -25,35 +23,23 @@ const LoginScreen: FC<Login> = ({navigation}) => {
       <View style={styles.textcontainer}>
         <Text style={styles.text}>Millions of songs Free on Spotify.</Text>
       </View>
-
-      <CustomButton onPress={SignupNavigationHandler} >Signup for free</CustomButton>
-
-      <CustomButton
-        Buttonstyle={styles.Buttonstyle}
-        Backstyle={styles.Backstyle}
-        Istyle={styles.Phonestyle}
-        image={image.phone}>
-        Continue with phone number
-      </CustomButton>
-      <CustomButton
-        Buttonstyle={styles.Buttonstyle}
-        Backstyle={styles.Backstyle}
-        Istyle={styles.Googlestyle}
-        image={image.google}>
-        Continue with Google
-      </CustomButton>
-      <CustomButton
-        Buttonstyle={styles.Buttonstyle}
-        Backstyle={styles.Backstyle}
-        Istyle={styles.Facebookstyle}
-        image={image.facebook}>
-        Continue with facebook
-      </CustomButton>
+      <>
+        {btnArr.map((val, index) => (
+          <CustomButton
+            onPress={val?.onPress}
+            key={val?.id}
+            Buttonstyle={index != 0 && styles.Buttonstyle}
+            Backstyle={index != 0 && styles.Backstyle}
+            Istyle={index != 0 && styles.Facebookstyle}
+            image={val?.image}>
+            {val?.txt}
+          </CustomButton>
+        ))}
+      </>
       <CustomButton
         Buttonstyle={styles.Buttonstyle}
         Backstyle={{backgroundColor: 'black'}}
-        onPress={LoginNavigationHandler}
-        >
+        onPress={LoginNavigationHandler}>
         Login
       </CustomButton>
     </View>
@@ -64,4 +50,3 @@ export default LoginScreen;
 function Api() {
   throw new Error('Function not implemented.');
 }
-

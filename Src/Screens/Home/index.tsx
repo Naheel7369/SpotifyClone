@@ -25,7 +25,7 @@ const HomeScreen = () => {
   const [error, setError] = useState<string | null>(null);
   const [Track, setTrack] = useState<any[]>([]);
   const [Song, setSong] = useState<any[]>([]);
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state :any)=> state.Authentication);
   console.log('=====>selector', auth);
 
   useEffect(() => {

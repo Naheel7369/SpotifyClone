@@ -10,7 +10,7 @@ const initialState = {
         loggedIn: (state, action: PayloadAction<{accesstoken:string }>) => {
         console.log("payload",action.payload,action.payload.accesstoken);
         state.loggedIn=true;
-        state.accesstoken=action.payload;
+        state.accesstoken=action.payload.accesstoken;
 
       },
       LoggedOut: (state) => {

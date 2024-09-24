@@ -14,17 +14,17 @@ const SignInScreen = ({navigation}:any) => {
 
   const dispatch = useDispatch();
 
-    const init = async () => {
-     const  accesstoken = await getToken();
-     console.log('acess Token======>',accesstoken)
-    dispatch(loggedIn(accesstoken))
-    }
+    // const init = async () => {
+   
+    // //  console.log('acess Token======>',accesstoken)
+  
+    // }
      
-    function HomeHandler(){
-      navigation.navigate('Home'),
-      init();
-    
-    
+   async function HomeHandler (){
+      navigation.navigate('Home')
+      
+      const  accesstoken = await getToken();
+      dispatch(loggedIn(accesstoken))
     };
 
   return (

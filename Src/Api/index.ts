@@ -1,13 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import { loggedIn } from "../../Reducers/slice";
+import { loggedIn, LoggedOut } from "../../Reducers/slice";
 import { store } from "../../Reducers/store";
 
-// export async function refreshToken() {
-//   const newToken = await getToken(); 
-//   await AsyncStorage.setItem('access_token', newToken); 
-//   return newToken;
-// }
+
+
 
 
 export const refreshToken = async () => {
@@ -27,6 +24,9 @@ export const refreshToken = async () => {
   (response) => response,
   async (error) => {
     if (error.response && error.response.status === 401) {
+       
+
+      // store.dispatch(LoggedOut());
       
      try{
       const newToken =await refreshToken();
@@ -47,8 +47,8 @@ export const refreshToken = async () => {
 export default axiosInstance;
 
 
-const client_id = 'b6695874e8e446e8898848a685af1d9a'; 
-const client_secret = '079e5d2fa0994006a891831e7deb255c';
+const client_id = 'e3a8b972ac3344ad9fa653f3e53d5491'; 
+const client_secret = '507fa9951a2b48268ff3c54790cd463a';
 
 
 export async function getToken() {
@@ -71,6 +71,8 @@ export async function getToken() {
   const data = await response.json();
   await AsyncStorage.setItem('access_token', data.access_token); 
   return data.access_token;
+
+
 }
 
 
@@ -124,7 +126,7 @@ export const Tracks = async () => {
      
     );
 
-    console.log('===>', response.data);
+    console.log('trackssss===>', response.data);
     return response.data;
   } catch (error) {
     console.log('Error fetching New Tracks:', error);
