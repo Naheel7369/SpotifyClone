@@ -113,10 +113,11 @@ const MusicPlayer = ({navigation, route}: any) => {
         </TouchableOpacity>
       ),
       headerTitle: 'MusicPlayer',
+    
     });
   }, [navigation, track]);
 
-  const fetchGettingSongs = async songId => {
+  const fetchGettingSongs = async (songId: any) => {
     try {
       const response = await GettingSongs(songId);
       if (response) {
