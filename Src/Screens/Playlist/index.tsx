@@ -27,6 +27,7 @@ const PlaylistScreen = ({route}) => {
   const [formattedTime, setFormattedTime] = useState('');
   useEffect(() => {
     navigation.setOptions({
+      
       headerLeft: () => (
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={image.back} />
@@ -44,6 +45,16 @@ const PlaylistScreen = ({route}) => {
   const scrollHandler = useAnimatedScrollHandler(event => {
     translateY.value = event.contentOffset.y;
   });
+
+  const animatedHeaderLeftStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(translateY.value, [0, 200], [1, 0], 'clamp');
+    const translateX = interpolate(translateY.value, [0, 200], [0, -50], 'clamp');
+    return{
+      opacity,
+      translateY:translateX
+    };
+  });
+
 
   const animatedImagestyle = useAnimatedStyle(() => {
     const scale = interpolate(translateY.value, [0, 400], [1, 0.5], 'clamp');
@@ -74,6 +85,7 @@ const PlaylistScreen = ({route}) => {
       opacity,
     };
   });
+
 
   const handleImagePress = (track: any) => {
     const options = {
