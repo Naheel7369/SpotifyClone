@@ -17,6 +17,7 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const PlaylistScreen = ({route}) => {
   const {albumId, albumName} = route.params;
@@ -25,35 +26,43 @@ const PlaylistScreen = ({route}) => {
   const [error, setError] = useState<string | null>(null);
   const [tracks, setTracks] = useState<any[]>([]);
   const [formattedTime, setFormattedTime] = useState('');
+  const translateY = useSharedValue(0);
   useEffect(() => {
     navigation.setOptions({
-      
-      headerLeft: () => (
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image source={image.back} />
-        </TouchableOpacity>
+      headerleft: () => (
+        <Animated.View style={[animatedHeaderStyle, { backgroundColor: '#030303', width: '420%',height:'100%' }]}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <MaterialCommunityIcons
+                color={'white'}
+                size={42}
+                name="chevron-left"
+              />
+              <Animated.Text style={{ color: 'white', fontSize: 24, }}>
+                {albumName}
+              </Animated.Text>
+            </View>
+          </TouchableOpacity>
+        </Animated.View>
       ),
-      headerTitle: albumName,
-      headerStyle: { backgroundColor: 'black' },
-      headerTintColor: 'white',
-      headerTransparent: true,
+      headerTitle: '', 
+      headerTitleAlign:'center',
     });
-  }, [navigation, albumName]);
+  }, [navigation, translateY.value, albumName]);
+  
+  const animatedHeaderStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(translateY.value, [150, 200], [0, 1], 'clamp');
+    return {
+      opacity,
+    };
+  });
 
-  const translateY = useSharedValue(0);
 
   const scrollHandler = useAnimatedScrollHandler(event => {
     translateY.value = event.contentOffset.y;
   });
 
-  const animatedHeaderLeftStyle = useAnimatedStyle(() => {
-    const opacity = interpolate(translateY.value, [0, 200], [1, 0], 'clamp');
-    const translateX = interpolate(translateY.value, [0, 200], [0, -50], 'clamp');
-    return{
-      opacity,
-      translateY:translateX
-    };
-  });
+ 
 
 
   const animatedImagestyle = useAnimatedStyle(() => {

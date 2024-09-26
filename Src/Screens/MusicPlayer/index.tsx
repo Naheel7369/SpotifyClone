@@ -44,7 +44,7 @@ const MusicPlayer = ({navigation, route}: any) => {
       });
   };
 
-  // Format time from seconds to minutes:seconds
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -200,7 +200,7 @@ const MusicPlayer = ({navigation, route}: any) => {
           minimumTrackTintColor="#FFF"
           maximumTrackTintColor="#000000"
           value={position}
-          onSlidingComplete={value => sound?.setCurrentTime(value)} // Seek when the user interacts with the slider
+          onSlidingComplete={value => sound?.setCurrentTime(value)} 
         />
       </View>
 
@@ -227,7 +227,6 @@ const MusicPlayer = ({navigation, route}: any) => {
         </TouchableOpacity>
       </View>
 
-      {/* Bottom controls */}
       <View style={styles.controlsRow}></View>
       <View
         style={{

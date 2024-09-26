@@ -31,7 +31,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchReleases = async () => {
       try {
-        const response = await Releases(); // Call the API to get album releases
+        const response = await Releases(); 
         const fetchedAlbums = response?.albums?.items.map((album: any) => ({
           id: album.id,
           name: album.name,
@@ -48,8 +48,8 @@ const HomeScreen = () => {
     };
     const fetchTracks = async () => {
       try {
-        const response = await Tracks(); // Call the API to get track details
-        console.log('Tracks response:', response); // Check the response structure
+        const response = await Tracks(); 
+        console.log('Tracks response:', response); 
 
         // Check if items exist and are in the correct structure
         const fetchedTracks =

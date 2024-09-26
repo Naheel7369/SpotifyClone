@@ -20,7 +20,7 @@ function HomePlaylistScreenStack() {
       <Stack.Screen
         name="PlayList"
         component={Playlist}
-        options={{headerShown: true}}
+        options={{headerShown: true,headerTransparent:true,}}
       />
        <Stack.Screen
         name="MusicPlayer"
